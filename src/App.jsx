@@ -4,14 +4,14 @@ import Navbar from './components/Navbar'
 import LightRays from './LightRays';
 import searchIcon from './Icons/search.svg'
 import WeatherData from './components/WeatherData'
-import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom'
+import { createHashRouter, RouterProvider, useNavigate } from 'react-router-dom'
 
 function Home({ city, setcity, setweather }) {
   const navigate = useNavigate();
 
   const searchweather = async () => {
     const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.trim()}&appid=${apiKey}&units=metric`
     const response = await fetch(url)
     const data = await response.json()
     setweather(data)
@@ -56,7 +56,7 @@ function App() {
   const [city, setcity] = useState("")
   const [weather, setweather] = useState(null)
 
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
       element: <Home city={city} setcity={setcity} setweather={setweather} />
